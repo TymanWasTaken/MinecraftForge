@@ -2,9 +2,11 @@ name: Build forge
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - '1.8.9'
   pull_request:
-    branches: [ master ]
+    branches:
+      - '1.8.9'
   workflow_dispatch:
 jobs:
   build:
