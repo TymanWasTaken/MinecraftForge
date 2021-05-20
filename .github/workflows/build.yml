@@ -1,0 +1,62 @@
+name: Build forge
+
+on:
+  push:
+    branches:
+      - '1.8.9'
+    paths-ignore:
+      - 'README.md'
+      - 'licenses/*'
+      - '.gitignore'
+      - '.gitattributes'
+  pull_request:
+    branches:
+      - '1.8.9'
+    paths-ignore:
+      - 'README.md'
+      - 'licenses/*'
+      - '.gitignore'
+      - '.gitattributes'
+  workflow_dispatch:
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    # Need to do some weird stuff because it fails without it
+    - name: Setup assetIndex hack
+      run: |
+        cp jsons/1.8.9.json .github/1.8.9.json 
+        cp .github/1.8.9-assetIndex.json jsons/1.8.9.json
+    - name: Let gradle fail
+      run: ./gradlew setup || true
+    - name: Revert 1.8.9.json
+      run: cp .github/1.8.9.json jsons/1.8.9.json
+    - name: Setup gradle
+      run: ./gradlew setup
+    - name: Build with Gradle
+      run: ./gradlew build
+    - name: Get short commit hash
+      run: git_hash_short=$(git rev-parse --short "$GITHUB_SHA")
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Forge Build ${{ env.git_hash_short }}
+        path: build/distributions/*.jar
+    - name: Stop gradle daemons
+      run: ./gradlew --stop
