@@ -27,7 +27,7 @@ jobs:
         cp jsons/1.8.9-dev.json .github/1.8.9-dev.json 
         cp .github/1.8.9-dev-assetIndex.json jsons/1.8.9-dev.json
     - name: Let gradle fail
-      run: ./gradlew setup
+      run: ./gradlew setup || true
     - name: Revert 1.8.9-dev.json
       run: cp .github/1.8.9-dev.json jsons/1.8.9-dev.json
     - name: Setup gradle
