@@ -5,6 +5,7 @@
   "type": "release",
   "inheritsFrom": "1.8.9",
   "minecraftArguments": "--version FML_DEV --tweakClass net.minecraftforge.fml.common.launcher.FMLTweaker",
+  "assetIndex": {},
   "libraries": [
     {
       "name": "com.github.asbyth:LegacyLauncher:3a8b9710ee",
@@ -112,6 +113,5 @@
   ],
   "mainClass": "net.minecraft.launchwrapper.Launch",
   "minimumLauncherVersion": 14,
-  "assets": "1.8",
-  "assetIndex": {}
+  "assets": "1.8"
 }
