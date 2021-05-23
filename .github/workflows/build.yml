@@ -21,6 +21,15 @@ jobs:
         java-version: 1.8
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    # Need to do some weird stuff because it fails without it
+    - name: Setup assetIndex hack
+      run: |
+        cp jsons/1.8.9-dev.json .github/1.8.9-dev.json 
+        cp .github/1.8.9-dev-assetIndex.json jsons/1.8.9-dev.json
+    - name: Let gradle fail
+      run: ./gradlew setup
+    - name: Revert 1.8.9-dev.json
+      run: cp .github/1.8.9-dev.json jsons/1.8.9-dev.json
     - name: Setup gradle
       run: ./gradlew setup
     - name: Build with Gradle
