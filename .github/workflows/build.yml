@@ -24,12 +24,12 @@ jobs:
     # Need to do some weird stuff because it fails without it
     - name: Setup assetIndex hack
       run: |
-        cp jsons/1.8.9-dev.json .github/1.8.9-dev.json 
-        cp .github/1.8.9-dev-assetIndex.json jsons/1.8.9-dev.json
+        cp jsons/1.8.9.json .github/1.8.9.json 
+        cp .github/1.8.9-assetIndex.json jsons/1.8.9.json
     - name: Let gradle fail
       run: ./gradlew setup || true
-    - name: Revert 1.8.9-dev.json
-      run: cp .github/1.8.9-dev.json jsons/1.8.9-dev.json
+    - name: Revert 1.8.9.json
+      run: cp .github/1.8.9.json jsons/1.8.9.json
     - name: Setup gradle
       run: ./gradlew setup
     - name: Build with Gradle
