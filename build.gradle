@@ -20,7 +20,7 @@ apply plugin: "net.minecraftforge.gradle.patcher"
 
 minecraft {
     version = "1.8.9"
-    mappings = 'stable_22'
+    mappings = "stable_22"
     workspaceDir = "projects"
     versionJson = "jsons/1.8.9-dev.json"
     buildUserdev = true
